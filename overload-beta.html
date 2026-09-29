@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Join the Overload Beta | DevSpawn</title>
+<meta name="description" content="Play OVERLOAD before launch. Sign up to test the Android game by DevSpawn.">
+<meta property="og:title" content="Join the OVERLOAD beta">
+<meta property="og:description" content="One-thumb arcade survival for Android. Sign up to play it before launch.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;600;700&display=swap">
+<style>
+:root{
+  --void:#060a1c; --panel:#0c1330; --line:#1f2b57;
+  --cyan:#3ff6ff; --mag:#ff3fd2; --gold:#ffc94a;
+  --text:#e6eeff; --muted:#9aa8cc; --ink:#04111a;
+  --display:'Orbitron','Segoe UI',system-ui,sans-serif;
+  --body:'Rajdhani','Segoe UI',system-ui,-apple-system,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--void);
+  background-image:
+    radial-gradient(60rem 40rem at 10% -10%, rgba(110,40,190,.24), transparent 60%),
+    radial-gradient(50rem 40rem at 110% 30%, rgba(20,110,200,.2), transparent 60%);
+  background-attachment:fixed;
+  color:var(--text); font-family:var(--body); font-size:19px; line-height:1.55;
+  padding:0 16px;
+}
+a{color:var(--cyan)}
+a:focus-visible,.btn:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}
+.wrap{max-width:640px;margin:0 auto;padding:44px 0 64px;display:flex;flex-direction:column;gap:22px}
+.brand{font-family:var(--display);font-size:13px;letter-spacing:.3em;color:var(--muted);text-decoration:none}
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:10px 0 6px}
+.orb{width:96px;height:96px;border-radius:50%;position:relative;margin:8px 0 10px;
+     box-shadow:0 0 0 6px var(--cyan),0 0 36px 10px rgba(63,246,255,.45);animation:pulse 2.4s ease-in-out infinite}
+.orb::after{content:"";position:absolute;inset:30px;border-radius:50%;background:#fff;box-shadow:0 0 22px rgba(255,255,255,.85)}
+@keyframes pulse{50%{box-shadow:0 0 0 6px var(--cyan),0 0 56px 18px rgba(63,246,255,.55)}}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(38px,11vw,64px);line-height:1;margin:0;color:var(--cyan);
+   text-shadow:0 0 24px rgba(63,246,255,.5);letter-spacing:.03em}
+.words{font-family:var(--display);font-weight:700;letter-spacing:.14em;font-size:15px;margin:2px 0 0}
+.words .r{color:var(--cyan)} .words .s{color:var(--mag)}
+.tag{font-size:21px;margin:6px 0 0;max-width:30ch}
+.badge{display:inline-block;font-family:var(--display);font-size:12px;letter-spacing:.2em;color:var(--gold);
+       border:1px solid rgba(255,201,74,.6);border-radius:999px;padding:6px 14px;margin-top:6px}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px 20px;display:flex;gap:16px;align-items:flex-start}
+.num{flex:0 0 auto;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:900;
+     color:var(--cyan);border:2px solid var(--cyan);box-shadow:0 0 14px rgba(63,246,255,.35)}
+.step h2{font-family:var(--display);font-size:15px;letter-spacing:.1em;margin:6px 0 4px;color:#fff}
+.step p{margin:0;color:var(--text)}
+.step .muted{color:var(--muted);font-size:17px}
+.step>div{min-width:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;margin-top:12px;
+     font-family:var(--display);font-weight:900;font-size:16px;letter-spacing:.08em;text-decoration:none;
+     padding:14px 22px;border-radius:14px;background:var(--cyan);color:var(--ink);box-shadow:0 0 22px rgba(63,246,255,.45)}
+.btn.gold{background:var(--gold);box-shadow:0 0 22px rgba(255,201,74,.45)}
+.btn[aria-disabled="true"]{background:#2a3563;color:var(--muted);box-shadow:none;pointer-events:none}
+.note{background:rgba(255,63,210,.08);border:1px solid rgba(255,63,210,.4);border-radius:16px;padding:14px 18px;font-size:17px}
+.note b{color:#fff}
+.form{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.form label{font-size:15px;color:var(--muted);letter-spacing:.04em}
+.form input,.form textarea{width:100%;font:inherit;font-size:18px;color:var(--text);background:#070c22;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+.form textarea{min-height:120px;resize:vertical}
+.form input:focus,.form textarea:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(63,246,255,.2)}
+.form button{border:0;cursor:pointer;margin-top:4px}
+.msg{min-height:1.4em;font-size:17px;margin:0}
+.msg.ok{color:var(--cyan)} .msg.err{color:#ff8a8a}
+.hp{position:absolute;left:-9999px}
+section.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+section.card h2{font-family:var(--display);font-size:15px;letter-spacing:.1em;margin:4px 0 4px;color:var(--mag)}
+footer{text-align:center;color:var(--muted);font-size:15px;margin-top:10px}
+@media (prefers-reduced-motion:reduce){.orb{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="brand" href="index.html">DEVSPAWN</a>
+
+  <section class="hero">
+    <div class="orb" role="img" aria-label="Overload orb"></div>
+    <h1>OVERLOAD</h1>
+    <p class="words">HOLD. <span class="r">RELEASE.</span> <span class="s">SURVIVE.</span></p>
+    <p class="tag">A one-thumb arcade survival game. Play it before anyone else.</p>
+    <span class="badge">ANDROID BETA</span>
+  </section>
+
+  <ol class="steps">
+    <li class="step">
+      <span class="num">1</span>
+      <div>
+        <h2>SIGN UP WITH YOUR GMAIL</h2>
+        <p>Use the Gmail that is signed in to the Play Store on your Android phone.</p>
+        <form class="form" id="signupForm" novalidate>
+          <label for="gmail">Your Gmail</label>
+          <input id="gmail" name="gmail" type="email" inputmode="email" autocomplete="email" placeholder="yourname@gmail.com" required maxlength="100">
+          <label for="nick">Name or nickname (optional)</label>
+          <input id="nick" name="nick" type="text" autocomplete="nickname" maxlength="40">
+          <input class="hp" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn" type="submit">JOIN THE BETA</button>
+          <p class="msg" id="signupMsg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </li>
+    <li class="step">
+      <span class="num">2</span>
+      <div>
+        <h2>WAIT FOR YOUR INVITE</h2>
+        <p>We add your Gmail to the tester list and message you when it's ready.</p>
+        <p class="muted">This usually takes a day.</p>
+      </div>
+    </li>
+    <li class="step">
+      <span class="num">3</span>
+      <div>
+        <h2>INSTALL FROM GOOGLE PLAY</h2>
+        <p>On your phone, open the test link, tap <b>Become a tester</b>, then install.</p>
+        <a id="testBtn" class="btn gold" href="#" target="_blank" rel="noopener">OPEN TEST LINK</a>
+      </div>
+    </li>
+    <li class="step">
+      <span class="num">4</span>
+      <div>
+        <h2>PLAY AND KEEP IT INSTALLED</h2>
+        <p>Play a few runs and tell us what you think. Please keep the game installed for <b>14 days</b>. Google needs that before the game can launch.</p>
+      </div>
+    </li>
+  </ol>
+
+  <section class="card" id="feedback">
+    <h2>SEND FEEDBACK</h2>
+    <p>Found a bug, got an idea, or just loved a run? Tell us.</p>
+    <form class="form" id="fbForm" novalidate>
+      <label for="fbText">Your feedback</label>
+      <textarea id="fbText" name="feedback" maxlength="1000" required></textarea>
+      <label for="fbMail">Your Gmail (optional, so we can reply)</label>
+      <input id="fbMail" name="gmail" type="email" inputmode="email" autocomplete="email" maxlength="100">
+      <input class="hp" id="website2" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn gold" type="submit">SEND FEEDBACK</button>
+      <p class="msg" id="fbMsg" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <p class="note"><b>Android only.</b> The test link only works for Gmail accounts on the tester list, so do step 1 first.</p>
+
+  <footer>Questions: <a href="mailto:devarthsambare123@gmail.com">devarthsambare123@gmail.com</a><br>
+  <a href="overload-privacy.html">Privacy policy</a> &middot; &copy; 2026 DevSpawn</footer>
+</div>
+
+<script>
+/* Test link: paste the closed test "Join on Android" link here once Google approves the release. */
+var TEST_URL = "";
+var SB_URL = "https://bgwjrnrvvbyleewrgevg.supabase.co";
+var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnd2pybnJ2dmJ5bGVld3JnZXZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAzNjU3NTYsImV4cCI6MjEwNTk0MTc1Nn0.U_Y3P0jGdNOVpM5qohT1u5F6bzo2HuTekfG-OATUoA8";
+
+var t = document.getElementById('testBtn');
+if (TEST_URL) { t.href = TEST_URL; } else { t.setAttribute('aria-disabled','true'); t.removeAttribute('href'); t.textContent = 'LINK COMING SOON'; }
+
+var GMAIL = /^[a-z0-9._%+-]+@gmail\.com$/i;
+function send(row, msgEl, btn, onOk){
+  btn.disabled = true; msgEl.className = 'msg'; msgEl.textContent = 'Sending...';
+  fetch(SB_URL + '/rest/v1/beta_signups', {
+    method: 'POST',
+    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify(row)
+  }).then(function(r){
+    if (!r.ok) throw new Error('status ' + r.status);
+    msgEl.className = 'msg ok'; onOk();
+  }).catch(function(){
+    msgEl.className = 'msg err'; msgEl.textContent = 'Could not send. Check your connection and try again.';
+  }).then(function(){ btn.disabled = false; });
+}
+
+document.getElementById('signupForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var f = e.target, msg = document.getElementById('signupMsg'), btn = f.querySelector('button');
+  if (f.website.value) return;
+  var mail = f.gmail.value.trim().toLowerCase();
+  if (!GMAIL.test(mail)) { msg.className = 'msg err'; msg.textContent = 'Enter a Gmail address, like yourname@gmail.com'; f.gmail.focus(); return; }
+  send({ kind: 'signup', gmail: mail, name: f.nick.value.trim() || null }, msg, btn, function(){
+    msg.textContent = "You're in the queue. We'll message you when your invite is ready."; f.reset();
+  });
+});
+
+document.getElementById('fbForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var f = e.target, msg = document.getElementById('fbMsg'), btn = f.querySelector('button');
+  if (f.website.value) return;
+  var text = f.feedback.value.trim(), mail = f.gmail.value.trim().toLowerCase();
+  if (text.length < 3) { msg.className = 'msg err'; msg.textContent = 'Write a few words first.'; f.feedback.focus(); return; }
+  if (mail && !GMAIL.test(mail)) { msg.className = 'msg err'; msg.textContent = 'That Gmail looks wrong. Leave it empty or fix it.'; return; }
+  send({ kind: 'feedback', gmail: mail || null, feedback: text }, msg, btn, function(){
+    msg.textContent = 'Thanks! Feedback sent.'; f.reset();
+  });
+});
+</script>
+</body>
+</html>
