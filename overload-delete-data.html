@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Delete Your Overload Data | DevSpawn</title>
+<meta name="description" content="How to request deletion of your data from OVERLOAD, a game by DevSpawn.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;600;700&display=swap">
+<style>
+:root{
+  --void:#060a1c; --panel:#0c1330; --line:#1f2b57;
+  --cyan:#3ff6ff; --mag:#ff3fd2; --gold:#ffc94a; --red:#ff5a5a;
+  --text:#e6eeff; --muted:#9aa8cc;
+  --display:'Orbitron','Segoe UI',system-ui,sans-serif;
+  --body:'Rajdhani','Segoe UI',system-ui,-apple-system,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--void);
+  background-image:
+    radial-gradient(60rem 40rem at 10% -10%, rgba(110,40,190,.22), transparent 60%),
+    radial-gradient(50rem 40rem at 110% 20%, rgba(20,110,200,.18), transparent 60%);
+  background-attachment:fixed;
+  color:var(--text); font-family:var(--body); font-size:19px; line-height:1.6;
+  padding:0 16px;
+}
+a{color:var(--cyan)}
+a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.wrap{max-width:760px;margin:0 auto;padding:48px 0 72px}
+header{display:flex;flex-direction:column;gap:6px;margin-bottom:32px}
+.brand{font-family:var(--display);font-size:13px;letter-spacing:.3em;color:var(--muted);text-decoration:none}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(32px,7vw,54px);line-height:1.05;margin:8px 0 0;color:var(--cyan);
+   text-shadow:0 0 22px rgba(63,246,255,.45);letter-spacing:.02em}
+.sub{font-family:var(--display);font-weight:700;font-size:clamp(16px,3.4vw,22px);letter-spacing:.14em;margin:0}
+.lead{font-size:20px;margin:0 0 24px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px 24px;margin:0 0 16px}
+h2{font-family:var(--display);font-size:16px;letter-spacing:.12em;text-transform:uppercase;color:var(--mag);margin:0 0 12px}
+.steps{border-color:rgba(255,201,74,.55)}
+.steps h2{color:var(--gold)}
+ol{margin:0;padding-left:24px}
+ol li{margin:0 0 12px;padding-left:4px}
+ul{margin:0;padding-left:20px}
+ul li{margin:0 0 10px}
+li:last-child,p:last-child{margin-bottom:0}
+p{margin:0 0 10px}
+b{color:#fff;font-weight:700}
+.mail{font-size:22px;font-weight:700;word-break:break-all}
+code{font-family:ui-monospace,Consolas,monospace;font-size:17px;background:rgba(63,246,255,.1);border:1px solid rgba(63,246,255,.3);border-radius:6px;padding:1px 6px}
+footer{margin-top:36px;color:var(--muted);font-size:15px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="index.html">DEVSPAWN</a>
+    <h1>OVERLOAD</h1>
+    <p class="sub">DELETE YOUR DATA</p>
+  </header>
+
+  <p class="lead">This page explains how players of <b>OVERLOAD</b> (by <b>DevSpawn</b>, package com.devspawn.overload) can ask for their data to be deleted.</p>
+
+  <section class="steps">
+    <h2>How to request deletion</h2>
+    <ol>
+      <li>Send an email to <span class="mail"><a href="mailto:devarthsambare123@gmail.com?subject=Delete%20my%20Overload%20data">devarthsambare123@gmail.com</a></span></li>
+      <li>Use the subject <code>Delete my Overload data</code></li>
+      <li>Write the <b>nickname</b> you use in the game. If you changed it, list your old nicknames too.</li>
+      <li>We will reply to confirm, and delete your data within <b>30 days</b>.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>What we delete</h2>
+    <ul>
+      <li>All your <b>leaderboard entries</b>: nickname, scores, powers used, game version and the device identifier stored with them.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>What is kept, and for how long</h2>
+    <ul>
+      <li><b>Analytics data</b> (Google Firebase Analytics) is not linked to your nickname. It is deleted automatically under Google Analytics retention settings, at most 14 months.</li>
+      <li><b>Crash reports</b> (Firebase Crashlytics) are deleted automatically by Google after about 90 days.</li>
+      <li><b>Advertising data</b> is held by our ad partner Unity (including ironSource). You can ask them directly using the options in the <a href="https://unity.com/legal/game-player-and-app-user-privacy-policy" rel="noopener">Unity player privacy policy</a>, and reset your advertising ID in your Android settings.</li>
+      <li><b>Progress saved on your phone</b> (shards, unlocks, settings) is removed when you uninstall the game.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>More information</h2>
+    <p>See the full <a href="overload-privacy.html">Overload privacy policy</a>.</p>
+  </section>
+
+  <footer>&copy; 2026 DevSpawn</footer>
+</div>
+</body>
+</html>
