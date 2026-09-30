@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Overload Live Rankings | DevSpawn</title>
+<meta name="description" content="Live monthly leaderboard for OVERLOAD, a one-thumb arcade survival game by DevSpawn.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;600;700&display=swap">
+<style>
+:root{
+  --void:#060a1c; --panel:#0c1330; --panel2:#101a3f; --line:#1f2b57;
+  --cyan:#3ff6ff; --mag:#ff3fd2; --gold:#ffc94a; --silver:#cfd8ff; --bronze:#ff9d5c; --green:#5dff9d;
+  --text:#e6eeff; --muted:#9aa8cc;
+  --display:'Orbitron','Segoe UI',system-ui,sans-serif;
+  --body:'Rajdhani','Segoe UI',system-ui,-apple-system,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--void);
+  background-image:
+    radial-gradient(60rem 40rem at 10% -10%, rgba(110,40,190,.22), transparent 60%),
+    radial-gradient(50rem 40rem at 110% 20%, rgba(20,110,200,.18), transparent 60%);
+  background-attachment:fixed;
+  color:var(--text); font-family:var(--body); font-size:19px; line-height:1.45;
+  padding:0 16px;
+}
+a{color:var(--cyan)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.wrap{max-width:760px;margin:0 auto;padding:40px 0 64px}
+header{display:flex;flex-direction:column;gap:6px;margin-bottom:24px}
+.brand{font-family:var(--display);font-size:13px;letter-spacing:.3em;color:var(--muted);text-decoration:none}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(32px,7vw,54px);line-height:1.05;margin:8px 0 0;color:var(--cyan);
+   text-shadow:0 0 22px rgba(63,246,255,.45);letter-spacing:.02em}
+.sub{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:clamp(15px,3.2vw,20px);letter-spacing:.14em;margin:0}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);flex:0 0 auto;animation:pulse 1.6s ease-in-out infinite}
+.dot.off{background:var(--muted);box-shadow:none;animation:none}
+@keyframes pulse{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.dot{animation:none}}
+
+.season{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px 20px;display:flex;flex-wrap:wrap;gap:10px 24px;align-items:baseline;justify-content:space-between;margin-bottom:22px}
+.season .name{font-family:var(--display);font-weight:700;letter-spacing:.1em;font-size:16px;color:var(--mag)}
+.stats{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-weight:600;font-size:17px}
+.stats b{color:var(--text)}
+
+.podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:10px;align-items:end;margin-bottom:18px}
+.p{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px 10px 16px;text-align:center;min-width:0;position:relative}
+.p .medal{font-family:var(--display);font-weight:900;font-size:26px;line-height:1}
+.p .pname{font-weight:700;font-size:20px;margin:8px 0 2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.p .pscore{font-family:var(--display);font-weight:700;font-size:clamp(15px,3.6vw,20px)}
+.p .ppow{color:var(--muted);font-size:14px;margin-top:6px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.p1{border-color:rgba(255,201,74,.7);box-shadow:0 0 30px rgba(255,201,74,.18);padding-top:22px;padding-bottom:22px}
+.p1 .medal,.p1 .pscore{color:var(--gold)}
+.p2 .medal,.p2 .pscore{color:var(--silver)}
+.p3 .medal,.p3 .pscore{color:var(--bronze)}
+.p2{border-color:rgba(207,216,255,.45)}
+.p3{border-color:rgba(255,157,92,.45)}
+.p.empty{opacity:.35}
+
+.list{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.row{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.rank{font-family:var(--display);font-weight:700;color:var(--muted);font-size:16px}
+.who{min-width:0}
+.who .n{font-weight:700;font-size:19px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.who .pw{color:var(--muted);font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sc{font-family:var(--display);font-weight:700;color:var(--cyan);font-size:16px}
+.row.flash{animation:flash 1.6s ease-out}
+@keyframes flash{from{background:rgba(63,246,255,.18)}to{background:transparent}}
+
+.msg{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:28px 20px;text-align:center;color:var(--muted)}
+.msg b{display:block;color:var(--text);font-size:21px;margin-bottom:4px}
+.champ{margin:18px 0 0;text-align:center;color:var(--muted);font-weight:600}
+.champ b{color:var(--gold)}
+.cta{display:flex;justify-content:center;margin-top:26px}
+.cta a{font-family:var(--display);font-weight:700;letter-spacing:.1em;font-size:15px;text-decoration:none;color:#061022;background:var(--cyan);padding:14px 24px;border-radius:14px;box-shadow:0 0 24px rgba(63,246,255,.35)}
+footer{margin-top:32px;color:var(--muted);font-size:15px;text-align:center}
+
+@media (max-width:480px){
+  body{font-size:18px}
+  .podium{gap:6px}
+  .p{padding:12px 6px 14px}
+  .p .pname{font-size:17px}
+  .p .ppow{display:none}
+  .row{grid-template-columns:36px 1fr auto;padding:11px 12px;gap:10px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="index.html">DEVSPAWN</a>
+    <h1>OVERLOAD</h1>
+    <p class="sub"><span class="dot off" id="dot" aria-hidden="true"></span>LIVE RANKINGS</p>
+  </header>
+
+  <div class="season">
+    <span class="name" id="seasonName">SEASON</span>
+    <span class="stats">
+      <span><b id="daysLeft">-</b> <span id="daysWord">days</span> left</span>
+      <span><b id="players">-</b> <span id="playersWord">players</span></span>
+      <span id="updated">loading</span>
+    </span>
+  </div>
+
+  <div id="board" aria-live="polite"></div>
+  <p class="champ" id="champ" hidden></p>
+
+  <div class="cta"><a href="overload-beta.html">JOIN THE BETA</a></div>
+
+  <footer>Scores refresh every 20 seconds. Only the latest game version can post scores.<br>&copy; 2026 DevSpawn</footer>
+</div>
+
+<script>
+var SB_URL = "https://bgwjrnrvvbyleewrgevg.supabase.co";
+var SB_KEY = "__ANON_KEY__";
+var EPOCH = 4;            // must match Leaderboard.Epoch in the game
+var LIMIT = 50;
+var REFRESH_MS = 20000;
+
+var MONTHS = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+var minBuild = 0, lastOk = 0, prevTop = {}, timer = null;
+
+function pad(n){ return (n < 10 ? "0" : "") + n; }
+function seasonKey(d){ return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-e" + EPOCH; }
+function prevMonth(d){ return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() - 1, 1)); }
+function fmt(n){ return Number(n || 0).toLocaleString("en-US"); }
+function el(tag, cls, text){ var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+function api(path){
+  return fetch(SB_URL + "/rest/v1/" + path, {
+    headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Prefer": "count=exact" }
+  }).then(function(r){
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    var range = r.headers.get("content-range") || "";
+    return r.json().then(function(j){ return { rows: j, total: parseInt(range.split("/")[1], 10) }; });
+  });
+}
+
+function header(now){
+  document.getElementById("seasonName").textContent = MONTHS[now.getUTCMonth()] + " " + now.getUTCFullYear() + " SEASON";
+  var next = Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1);
+  var d = Math.max(0, Math.ceil((next - now.getTime()) / 86400000));
+  document.getElementById("daysLeft").textContent = d;
+  document.getElementById("daysWord").textContent = d === 1 ? "day" : "days";
+}
+
+function podiumCard(row, place){
+  var card = el("div", "p p" + place + (row ? "" : " empty"));
+  card.appendChild(el("div", "medal", place === 1 ? "1ST" : place === 2 ? "2ND" : "3RD"));
+  card.appendChild(el("div", "pname", row ? row.name : "-"));
+  card.appendChild(el("div", "pscore", row ? fmt(row.score) : "0"));
+  if (row && row.powers) card.appendChild(el("div", "ppow", row.powers));
+  return card;
+}
+
+function render(rows){
+  var board = document.getElementById("board");
+  board.textContent = "";
+  if (!rows.length){
+    var m = el("div", "msg");
+    m.appendChild(el("b", null, "No scores yet this season"));
+    m.appendChild(document.createTextNode("Be the first on the board."));
+    board.appendChild(m);
+    return;
+  }
+  var pod = el("div", "podium");
+  pod.appendChild(podiumCard(rows[1], 2));
+  pod.appendChild(podiumCard(rows[0], 1));
+  pod.appendChild(podiumCard(rows[2], 3));
+  board.appendChild(pod);
+
+  if (rows.length > 3){
+    var list = el("div", "list");
+    for (var i = 3; i < rows.length; i++){
+      var r = rows[i];
+      var key = r.name + "|" + r.score;
+      var row = el("div", "row" + (lastOk && !prevTop[key] ? " flash" : ""));
+      row.appendChild(el("span", "rank", String(i + 1)));
+      var who = el("div", "who");
+      who.appendChild(el("div", "n", r.name));
+      if (r.powers) who.appendChild(el("div", "pw", r.powers));
+      row.appendChild(who);
+      row.appendChild(el("span", "sc", fmt(r.score)));
+      list.appendChild(row);
+    }
+    board.appendChild(list);
+  }
+  prevTop = {};
+  rows.forEach(function(r){ prevTop[r.name + "|" + r.score] = 1; });
+}
+
+function setLive(ok){
+  document.getElementById("dot").className = ok ? "dot" : "dot off";
+}
+
+function tickUpdated(){
+  var u = document.getElementById("updated");
+  if (!lastOk){ return; }
+  var s = Math.round((Date.now() - lastOk) / 1000);
+  u.textContent = s < 5 ? "updated just now" : "updated " + s + "s ago";
+}
+
+function load(){
+  var now = new Date();
+  header(now);
+  var season = seasonKey(now);
+  var cfg = api("config?select=min_build&id=eq.1").then(function(c){
+    if (c.rows && c.rows.length) minBuild = c.rows[0].min_build || 0;
+  }).catch(function(){});
+  cfg.then(function(){
+    return api("scores?select=name,score,powers&season=eq." + season + "&build=gte." + minBuild + "&order=score.desc&limit=" + LIMIT);
+  }).then(function(res){
+    render(res.rows || []);
+    var pc = isNaN(res.total) ? (res.rows || []).length : res.total;
+    document.getElementById("players").textContent = pc;
+    document.getElementById("playersWord").textContent = pc === 1 ? "player" : "players";
+    lastOk = Date.now(); setLive(true); tickUpdated();
+  }).catch(function(){
+    setLive(false);
+    document.getElementById("updated").textContent = "offline, retrying";
+    if (!lastOk){
+      var board = document.getElementById("board");
+      board.textContent = "";
+      var m = el("div", "msg");
+      m.appendChild(el("b", null, "Can't reach the leaderboard"));
+      m.appendChild(document.createTextNode("Check your connection. The page retries on its own."));
+      board.appendChild(m);
+    }
+  });
+
+  api("scores?select=name,score&season=eq." + seasonKey(prevMonth(now)) + "&order=score.desc&limit=1").then(function(res){
+    var c = document.getElementById("champ");
+    if (res.rows && res.rows.length){
+      c.textContent = "";
+      c.appendChild(document.createTextNode("Last season's champion: "));
+      c.appendChild(el("b", null, res.rows[0].name));
+      c.appendChild(document.createTextNode(" with " + fmt(res.rows[0].score)));
+      c.hidden = false;
+    } else c.hidden = true;
+  }).catch(function(){});
+}
+
+function start(){ if (!timer){ load(); timer = setInterval(load, REFRESH_MS); } }
+function stop(){ if (timer){ clearInterval(timer); timer = null; } }
+document.addEventListener("visibilitychange", function(){ document.hidden ? stop() : start(); });
+setInterval(tickUpdated, 1000);
+start();
+</script>
+</body>
+</html>
