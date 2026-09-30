@@ -242,7 +242,7 @@ function load(){
       c.hidden = false;
     } else c.hidden = true;
   }).catch(function(){});
-}
+} 
 
 function start(){ if (!timer){ load(); timer = setInterval(load, REFRESH_MS); } }
 function stop(){ if (timer){ clearInterval(timer); timer = null; } }
