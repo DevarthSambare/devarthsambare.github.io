@@ -130,13 +130,15 @@ function prevMonth(d){ return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMont
 function fmt(n){ return Number(n || 0).toLocaleString("en-US"); }
 function el(tag, cls, text){ var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 
-function api(path){
-  return fetch(SB_URL + "/rest/v1/" + path, {
-    headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Prefer": "count=exact" }
+// 27 Oct 2026: the tables are closed; the page calls the same safe server functions as the game
+function rpc(fn, args){
+  return fetch(SB_URL + "/rest/v1/rpc/" + fn, {
+    method: "POST",
+    headers: { "apikey": SB_KEY, "Authorization": "Bearer " + SB_KEY, "Content-Type": "application/json" },
+    body: JSON.stringify(args || {})
   }).then(function(r){
     if (!r.ok) throw new Error("HTTP " + r.status);
-    var range = r.headers.get("content-range") || "";
-    return r.json().then(function(j){ return { rows: j, total: parseInt(range.split("/")[1], 10) }; });
+    return r.json();
   });
 }
 
@@ -207,15 +209,10 @@ function tickUpdated(){
 function load(){
   var now = new Date();
   header(now);
-  var season = seasonKey(now);
-  var cfg = api("config?select=min_build&id=eq.1").then(function(c){
-    if (c.rows && c.rows.length) minBuild = c.rows[0].min_build || 0;
-  }).catch(function(){});
-  cfg.then(function(){
-    return api("scores?select=name,score,powers&season=eq." + season + "&build=gte." + minBuild + "&order=score.desc&limit=" + LIMIT);
-  }).then(function(res){
-    render(res.rows || []);
-    var pc = isNaN(res.total) ? (res.rows || []).length : res.total;
+  Promise.all([rpc("get_board", { p_device: "" }), rpc("get_player_count", {}).catch(function(){ return null; })]).then(function(res){
+    var rows = res[0] || [];
+    render(rows);
+    var pc = typeof res[1] === "number" ? res[1] : rows.length;
     document.getElementById("players").textContent = pc;
     document.getElementById("playersWord").textContent = pc === 1 ? "player" : "players";
     lastOk = Date.now(); setLive(true); tickUpdated();
@@ -232,17 +229,17 @@ function load(){
     }
   });
 
-  api("scores?select=name,score&season=eq." + seasonKey(prevMonth(now)) + "&order=score.desc&limit=1").then(function(res){
+  rpc("get_champion", { p_device: "" }).then(function(rows){
     var c = document.getElementById("champ");
-    if (res.rows && res.rows.length){
+    if (rows && rows.length){
       c.textContent = "";
       c.appendChild(document.createTextNode("Last season's champion: "));
-      c.appendChild(el("b", null, res.rows[0].name));
-      c.appendChild(document.createTextNode(" with " + fmt(res.rows[0].score)));
+      c.appendChild(el("b", null, rows[0].name));
+      c.appendChild(document.createTextNode(" with " + fmt(rows[0].score)));
       c.hidden = false;
     } else c.hidden = true;
   }).catch(function(){});
-} 
+}
 
 function start(){ if (!timer){ load(); timer = setInterval(load, REFRESH_MS); } }
 function stop(){ if (timer){ clearInterval(timer); timer = null; } }
